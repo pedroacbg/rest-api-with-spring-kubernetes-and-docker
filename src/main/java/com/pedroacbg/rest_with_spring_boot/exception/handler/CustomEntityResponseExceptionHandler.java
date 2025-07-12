@@ -1,7 +1,7 @@
 package com.pedroacbg.rest_with_spring_boot.exception.handler;
 
 import com.pedroacbg.rest_with_spring_boot.exception.ExceptionResponse;
-import com.pedroacbg.rest_with_spring_boot.exception.UnsupportedMathOperationException;
+import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,9 +22,9 @@ public class CustomEntityResponseExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleMathException(UnsupportedMathOperationException ex, WebRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(ResourceNotFoundException ex, WebRequest request){
         ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

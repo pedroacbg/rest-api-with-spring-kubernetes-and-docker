@@ -1,63 +1,69 @@
 package com.pedroacbg.rest_with_spring_boot.services;
 
+import com.pedroacbg.rest_with_spring_boot.data.dto.PersonDTO;
+import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
+import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseListObjects;
+import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseObject;
+
 import com.pedroacbg.rest_with_spring_boot.model.Person;
+import com.pedroacbg.rest_with_spring_boot.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Logger;
 
 @Service
 public class PersonService {
 
+    @Autowired
+    private PersonRepository personRepository;
+
     private final AtomicLong counter = new AtomicLong();
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
-    public List<Person> findAll(){
+    public List<PersonDTO> findAll(){
         logger.info("Finding all People!");
-        List<Person> people = new ArrayList<Person>();
-
-        for (int i = 0; i < 8; i++){
-            Person person = mockPerson(i);
-            people.add(person);
-        }
-
-        return people;
+        return parseListObjects(personRepository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(Long id){
+    public PersonDTO findById(Long id){
         logger.info("Finding one Person!");
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("Matheus");
-        person.setLastName("Sérgio");
-        person.setAddress("Xique-Xique - Bahia - Noruega");
-        person.setGender("Female");
-        return person;
+        var entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        return parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person person){
+    public PersonDTO create(PersonDTO person){
         logger.info("Creating a Person!");
-        return person;
+        var entity = parseObject(person, Person.class);
+        return parseObject(personRepository.save(entity), PersonDTO.class);
     }
 
-    public Person update(Person person){
+    public PersonDTO update(PersonDTO person){
         logger.info("Updating a Person!");
-        return person;
+        Person obj = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        obj.setFirstName(person.getFirstName());
+        obj.setLastName(person.getLastName());
+        obj.setAddress(person.getAddress());
+        obj.setGender(person.getGender());
+        return parseObject(personRepository.save(obj), PersonDTO.class);
     }
 
     public void delete(Long id){
         logger.info("Deleting one Person");
+        Person obj = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        personRepository.delete(obj);
     }
 
-    private Person mockPerson(int i) {
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("First Name " + i);
-        person.setLastName("Last Name " + i);
-        person.setAddress("Address " + i);
-        person.setGender("Female");
-        return person;
-    }
+//    private Person mockPerson(int i) {
+//        Person person = new Person();
+//        person.setId(counter.incrementAndGet());
+//        person.setFirstName("First Name " + i);
+//        person.setLastName("Last Name " + i);
+//        person.setAddress("Address " + i);
+//        person.setGender("Female");
+//        return person;
+//    }
 }
