@@ -1,6 +1,6 @@
 package com.pedroacbg.rest_with_spring_boot.unittests.mapper.mocks;
 
-import com.pedroacbg.rest_with_spring_boot.data.dto.PersonDTO;
+import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
 import com.pedroacbg.rest_with_spring_boot.model.Person;
 
 import java.util.ArrayList;

@@ -1,10 +1,12 @@
 package com.pedroacbg.rest_with_spring_boot.services;
 
-import com.pedroacbg.rest_with_spring_boot.data.dto.PersonDTO;
+import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
+import com.pedroacbg.rest_with_spring_boot.data.dto.v2.PersonDTOV2;
 import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
 import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseListObjects;
 import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseObject;
 
+import com.pedroacbg.rest_with_spring_boot.mapper.custom.PersonMapper;
 import com.pedroacbg.rest_with_spring_boot.model.Person;
 import com.pedroacbg.rest_with_spring_boot.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -20,6 +22,9 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private PersonMapper personMapper;
 
     private final AtomicLong counter = new AtomicLong();
     private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
@@ -39,6 +44,12 @@ public class PersonService {
         logger.info("Creating a Person!");
         var entity = parseObject(person, Person.class);
         return parseObject(personRepository.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("Creating a Person!");
+        var entity = parseObject(person, Person.class);
+        return personMapper.convertEntityToDTO(personRepository.save(entity));
     }
 
     public PersonDTO update(PersonDTO person){
