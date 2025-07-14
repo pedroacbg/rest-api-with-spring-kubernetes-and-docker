@@ -1,6 +1,7 @@
 package com.pedroacbg.rest_with_spring_boot.exception.handler;
 
 import com.pedroacbg.rest_with_spring_boot.exception.ExceptionResponse;
+import com.pedroacbg.rest_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,4 +28,11 @@ public class CustomEntityResponseExceptionHandler extends ResponseEntityExceptio
         ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleBadRequestException(ResourceNotFoundException ex, WebRequest request){
+        ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }
