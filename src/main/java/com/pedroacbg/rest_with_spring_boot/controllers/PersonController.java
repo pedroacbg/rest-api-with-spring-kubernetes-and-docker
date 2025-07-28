@@ -2,7 +2,7 @@ package com.pedroacbg.rest_with_spring_boot.controllers;
 
 import com.pedroacbg.rest_with_spring_boot.controllers.docs.PersonControllerDocs;
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
-import com.pedroacbg.rest_with_spring_boot.services.PersonService;
+import com.pedroacbg.rest_with_spring_boot.unittests.services.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

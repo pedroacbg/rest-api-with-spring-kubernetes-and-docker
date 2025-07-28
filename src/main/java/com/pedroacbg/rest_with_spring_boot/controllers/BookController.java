@@ -2,8 +2,7 @@ package com.pedroacbg.rest_with_spring_boot.controllers;
 
 import com.pedroacbg.rest_with_spring_boot.controllers.docs.BookControllerDocs;
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.BookDTO;
-import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
-import com.pedroacbg.rest_with_spring_boot.services.BookService;
+import com.pedroacbg.rest_with_spring_boot.unittests.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

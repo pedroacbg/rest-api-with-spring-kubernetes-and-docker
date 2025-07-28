@@ -1,4 +1,4 @@
-package com.pedroacbg.rest_with_spring_boot.services;
+package com.pedroacbg.rest_with_spring_boot.unittests.services;
 
 import com.pedroacbg.rest_with_spring_boot.controllers.BookController;
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.BookDTO;
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseObject;
@@ -60,7 +59,7 @@ public class BookService {
 
         logger.info("Updating a Book!");
         Book obj = bookRepository.findById(book.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-        obj.setLaunch_date(new Date());
+        obj.setLaunch_date(book.getLaunch_date());
         obj.setTitle(book.getTitle());
         obj.setPrice(book.getPrice());
         obj.setAuthor(book.getAuthor());
