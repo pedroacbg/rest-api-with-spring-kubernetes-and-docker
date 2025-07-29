@@ -1,4 +1,4 @@
-package com.pedroacbg.rest_with_spring_boot.unittests.mapper.mocks;
+package com.pedroacbg.rest_with_spring_boot.mapper.mocks;
 
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
 import com.pedroacbg.rest_with_spring_boot.model.Person;

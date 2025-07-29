@@ -1,4 +1,4 @@
-package com.pedroacbg.rest_with_spring_boot.unittests.services;
+package com.pedroacbg.rest_with_spring_boot.services;
 
 import com.pedroacbg.rest_with_spring_boot.controllers.PersonController;
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
