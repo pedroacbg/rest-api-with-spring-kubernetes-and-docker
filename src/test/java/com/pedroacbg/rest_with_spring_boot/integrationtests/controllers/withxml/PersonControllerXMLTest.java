@@ -1,12 +1,11 @@
 package com.pedroacbg.rest_with_spring_boot.integrationtests.controllers.withxml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.pedroacbg.rest_with_spring_boot.config.TestsConfigs;
 import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.PersonDTO;
-import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.wrapper.xml.PagedModelPerson;
+import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.wrapper.xml_and_yaml.PagedModelPerson;
 import com.pedroacbg.rest_with_spring_boot.integrationtests.testcontainers.AbstractIntegrationTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -187,16 +186,16 @@ class PersonControllerXMLTest extends AbstractIntegrationTest {
         assertEquals("Female", personFour.getGender());
         assertTrue(personFour.getEnabled());
 
-        PersonDTO personSeven = people.get(5);
+        PersonDTO personSix = people.get(5);
 
-        assertNotNull(personSeven.getId());
-        assertTrue(personSeven.getId() > 0);
+        assertNotNull(personSix.getId());
+        assertTrue(personSix.getId() > 0);
 
-        assertEquals("Anne-corinne", personSeven.getFirstName());
-        assertEquals("Trevan", personSeven.getLastName());
-        assertEquals("PO Box 43644", personSeven.getAddress());
-        assertEquals("Female", personSeven.getGender());
-        assertTrue(personSeven.getEnabled());
+        assertEquals("Anne-corinne", personSix.getFirstName());
+        assertEquals("Trevan", personSix.getLastName());
+        assertEquals("PO Box 43644", personSix.getAddress());
+        assertEquals("Female", personSix.getGender());
+        assertTrue(personSix.getEnabled());
 
     }
 

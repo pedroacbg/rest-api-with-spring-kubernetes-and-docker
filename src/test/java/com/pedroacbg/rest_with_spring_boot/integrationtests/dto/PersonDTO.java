@@ -1,7 +1,6 @@
 package com.pedroacbg.rest_with_spring_boot.integrationtests.dto;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
-import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
 import java.util.Objects;

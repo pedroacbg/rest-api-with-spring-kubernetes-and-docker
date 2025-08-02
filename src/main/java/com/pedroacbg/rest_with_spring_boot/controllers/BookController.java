@@ -34,12 +34,14 @@ public class BookController implements BookControllerDocs {
         return ResponseEntity.ok(bookService.findAll(pageable));
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override
     public BookDTO findByid(@PathVariable("id") Long id){
         return bookService.findById(id);
     }
 
+    @CrossOrigin(origins = {"http://localhost:8080", "https://gulerone-animes.netlify.app/"})
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override

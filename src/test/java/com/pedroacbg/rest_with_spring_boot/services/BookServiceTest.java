@@ -2,9 +2,9 @@ package com.pedroacbg.rest_with_spring_boot.services;
 
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.BookDTO;
 import com.pedroacbg.rest_with_spring_boot.exception.RequiredObjectIsNullException;
+import com.pedroacbg.rest_with_spring_boot.mapper.mocks.MockBook;
 import com.pedroacbg.rest_with_spring_boot.model.Book;
 import com.pedroacbg.rest_with_spring_boot.repository.BookRepository;
-import com.pedroacbg.rest_with_spring_boot.mapper.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
