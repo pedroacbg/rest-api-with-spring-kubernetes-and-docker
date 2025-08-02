@@ -4,9 +4,6 @@ import com.pedroacbg.rest_with_spring_boot.controllers.PersonController;
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
 import com.pedroacbg.rest_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
-import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseListObjects;
-import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseObject;
-
 import com.pedroacbg.rest_with_spring_boot.mapper.custom.PersonMapper;
 import com.pedroacbg.rest_with_spring_boot.model.Person;
 import com.pedroacbg.rest_with_spring_boot.repository.PersonRepository;
@@ -14,12 +11,17 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import static com.pedroacbg.rest_with_spring_boot.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -30,13 +32,43 @@ public class PersonService {
     @Autowired
     private PersonMapper personMapper;
 
+    @Autowired
+    PagedResourcesAssembler<PersonDTO> assembler;
+
     private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
-    public List<PersonDTO> findAll(){
+    public PagedModel<EntityModel<PersonDTO>> findAll(Pageable pageable){
         logger.info("Finding all People!");
-        var people = parseListObjects(personRepository.findAll(), PersonDTO.class);
-        people.forEach(p -> addHateoasLinks(p));
-        return people;
+
+        var entity = personRepository.findAll(pageable);
+        var entityWithLinks = entity.map(person -> {
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(), pageable.getPageSize(),
+                                String.valueOf(pageable.getSort()))).withSelfRel();
+
+        return assembler.toModel(entityWithLinks, findAllLink);
+    }
+
+    public PagedModel<EntityModel<PersonDTO>> findByName(String firstName, Pageable pageable){
+        logger.info("Finding People by name!");
+
+        var entity = personRepository.findPeopleByName(firstName, pageable);
+        var entityWithLinks = entity.map(person -> {
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(), pageable.getPageSize(),
+                                String.valueOf(pageable.getSort()))).withSelfRel();
+
+        return assembler.toModel(entityWithLinks, findAllLink);
     }
 
     public PersonDTO findById(Long id){
@@ -56,14 +88,6 @@ public class PersonService {
         addHateoasLinks(dto);
         return dto;
     }
-
-//    public PersonDTOV2 createV2(PersonDTOV2 person){
-//        logger.info("Creating a Person!");
-//        var entity = parseObject(person, Person.class);
-//        var dto = personMapper.convertEntityToDTO(personRepository.save(entity));
-//        addHateoasLinks(dto);
-//
-//    }
 
     public PersonDTO update(PersonDTO person){
         if(person == null) throw new RequiredObjectIsNullException();
@@ -98,7 +122,7 @@ public class PersonService {
 
     private static void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonController.class).findByid(dto.getId())).withRel("find by id").withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("find all").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findAll(0, 12, "asc")).withRel("find all").withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));

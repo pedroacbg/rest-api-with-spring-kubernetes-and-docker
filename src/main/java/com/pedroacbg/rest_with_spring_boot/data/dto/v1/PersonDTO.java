@@ -1,44 +1,20 @@
 package com.pedroacbg.rest_with_spring_boot.data.dto.v1;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.fasterxml.jackson.annotation.JsonProperty;
-//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.pedroacbg.rest_with_spring_boot.serializer.GenderSerializer;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
-//@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
-//@JsonFilter("PersonFilter")
+@Relation(collectionRelation = "people")
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long Id;
-
-//    @JsonProperty("first_name")
     private String firstName;
-
-//    @JsonProperty("last_name")
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
-
-//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-//    private String phoneNumber;
-
-//    @JsonFormat(pattern = "dd/MM/yyyy")
-//    private Date birthDate;
     private String address;
-//    private String sensitiveData;
-
-//    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
     private Boolean enabled;
 
