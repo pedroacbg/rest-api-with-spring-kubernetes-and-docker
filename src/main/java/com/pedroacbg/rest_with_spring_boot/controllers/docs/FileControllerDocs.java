@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,6 +70,6 @@ public interface FileControllerDocs {
             @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
             @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
     })
-     ResponseEntity<ResponseEntity> downloadFile(String fileName, HttpServletRequest request);
+     ResponseEntity<Resource> downloadFile(String fileName, HttpServletRequest request);
 
 }

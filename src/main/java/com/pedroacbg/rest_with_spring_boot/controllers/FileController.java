@@ -7,16 +7,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/file/v1")
@@ -40,12 +41,35 @@ public class FileController implements FileControllerDocs {
     }
 
     @Override
-    public List<UploadFileResponseDTO> uploadMultipleFiles(MultipartFile[] files) {
-        return List.of();
+    @PostMapping(value = "/uploadMultipleFiles", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<UploadFileResponseDTO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        // varre o array de files e chama a operação de upload para cada um adicionando no arrray de files
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> uploadFile(file)).collect(Collectors.toList());
     }
 
     @Override
-    public ResponseEntity<ResponseEntity> downloadFile(String fileName, HttpServletRequest request) {
-        return null;
+    @GetMapping(value = "/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("fileName") String fileName, HttpServletRequest request) {
+        Resource resource = fileStorageService.loadFileAsResource(fileName); // le o arquivo em disco e joga em um resource
+        String contentType = null;
+
+        // tenta determinar o content type e caso nao consiga loga um erro
+        try{
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        }catch (Exception e){
+            logger.error("Could not determine file type");
+        }
+
+        // caso o content type seja nulo seta um content type generico
+        if(contentType == null){
+            contentType = "application/octet-stream";
+        }
+
+        // retorna um response entity contendo o tipo de conteudo convertido, header com o anexo e no body retorna o resource provendo o download
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 }
