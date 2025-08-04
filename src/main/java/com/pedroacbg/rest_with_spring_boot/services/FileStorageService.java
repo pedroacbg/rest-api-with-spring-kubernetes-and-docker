@@ -1,7 +1,6 @@
 package com.pedroacbg.rest_with_spring_boot.services;
 
 import com.pedroacbg.rest_with_spring_boot.config.FileStorageConfig;
-import com.pedroacbg.rest_with_spring_boot.controllers.FileController;
 import com.pedroacbg.rest_with_spring_boot.exception.FileNotFoundException;
 import com.pedroacbg.rest_with_spring_boot.exception.FileStorageException;
 import org.slf4j.Logger;
