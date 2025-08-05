@@ -4,6 +4,7 @@ import com.pedroacbg.rest_with_spring_boot.exception.BadRequestException;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.MediaTypes;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.FileExporter;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.impl.CsvExporter;
+import com.pedroacbg.rest_with_spring_boot.file.exporter.impl.PdfExporter;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.impl.XlsxExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class FileExporterFactory {
             return context.getBean(XlsxExporter.class);
         } else if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_CSV_VALUE)) {
             return context.getBean(CsvExporter.class);
+        } else if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_PDF_VALUE)) {
+            return context.getBean(PdfExporter.class);
         }else{
             throw new BadRequestException("Invalid File Format!");
         }

@@ -61,30 +61,9 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         this.gender = gender;
     }
 
-//    public Date getBirthDate() {
-//        return birthDate;
-//    }
-//
-//    public void setBirthDate(Date birthDate) {
-//        this.birthDate = birthDate;
-//    }
-//
-//    public String getPhoneNumber() {
-//        return phoneNumber;
-//    }
-//
-//    public void setPhoneNumber(String phoneNumber) {
-//        this.phoneNumber = phoneNumber;
-//    }
-//
-//    public String getSensitiveData() {
-//        return sensitiveData;
-//    }
-//
-//    public void setSensitiveData(String sensitiveData) {
-//        this.sensitiveData = sensitiveData;
-//    }
-
+    public String getName(){
+        return (firstName != null ? firstName : "") + (lastName != null ? " " + lastName : "");
+    }
 
     public Boolean getEnabled() {
         return enabled;
