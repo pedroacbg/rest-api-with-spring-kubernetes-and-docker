@@ -2,20 +2,23 @@ package com.pedroacbg.rest_with_spring_boot.file.exporter.impl;
 
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.FileExporter;
+import com.pedroacbg.rest_with_spring_boot.services.QRCodeService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class PdfExporter implements FileExporter {
+
+    @Autowired
+    private QRCodeService qrCodeService;
 
     @Override
     public Resource exportFile(List<PersonDTO> people) throws Exception {
@@ -35,4 +38,36 @@ public class PdfExporter implements FileExporter {
             return new ByteArrayResource(outputStream.toByteArray());
         }
     }
+
+    @Override
+    public Resource exportPerson(PersonDTO person) throws Exception {
+        InputStream mainTemplateStream = getClass().getResourceAsStream("/templates/person.jrxml");
+        if(mainTemplateStream == null){
+            throw new RuntimeException("Template file not found: /templates/person.jrxml");
+        }
+        InputStream subReportStream = getClass().getResourceAsStream("/templates/books.jrxml");
+        if(subReportStream == null){
+            throw new RuntimeException("Template file not found: /templates/books.jrxml");
+        }
+
+        JasperReport mainReport = JasperCompileManager.compileReport(mainTemplateStream);
+        JasperReport subReport = JasperCompileManager.compileReport(subReportStream);
+
+        InputStream qrCodeStream = qrCodeService.generateQRCode(person.getProfileUrl(), 200, 200);
+
+        JRBeanCollectionDataSource mainDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person));
+        JRBeanCollectionDataSource subDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person.getBooks()));
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("SUB_REPORT_DATA_SOURCE", subDataSource);
+        parameters.put("BOOK_SUB_REPORT", subReport);
+        parameters.put("QR_CODEIMAGE", qrCodeStream);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(mainReport, parameters, mainDataSource);
+
+        try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
+            JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+            return new ByteArrayResource(outputStream.toByteArray());
+        }
+    }
+
+
 }
