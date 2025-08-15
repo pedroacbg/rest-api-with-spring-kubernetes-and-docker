@@ -7,22 +7,9 @@
 			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0 ]]></conditionExpression>
 		</conditionalStyle>
 	</style>
-	<parameter name="PERSON_ID" class="java.lang.String"/>
-	<parameter name="SUB_REPORT_DATA_SOURCE" class="java.lang.String"/>
-	<query language="SQL"><![CDATA[SELECT
-	id,
-	author,
-	launch_date AS launchDate,
-	price,
-	title
-FROM 
-	books b
-INNER JOIN 
-	person_books pb
-ON 
-	pb.book_id = b.id
-WHERE pb.person_id = 1]]></query>
-	<field name="id" class="java.lang.Integer">
+	<parameter name="PERSON_ID" class="java.lang.Long"/>
+	<parameter name="SUB_REPORT_DATA_SOURCE" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="books"/>
@@ -32,12 +19,12 @@ WHERE pb.person_id = 1]]></query>
 		<property name="com.jaspersoft.studio.field.label" value="author"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="books"/>
 	</field>
-	<field name="launchDate" class="java.sql.Date">
+	<field name="launchDate" class="java.util.Date">
 		<property name="com.jaspersoft.studio.field.name" value="launch_date"/>
 		<property name="com.jaspersoft.studio.field.label" value="launchDate"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="books"/>
 	</field>
-	<field name="price" class="java.math.BigDecimal">
+	<field name="price" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="price"/>
 		<property name="com.jaspersoft.studio.field.label" value="price"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="books"/>

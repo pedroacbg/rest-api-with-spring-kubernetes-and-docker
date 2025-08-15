@@ -76,7 +76,7 @@ public class BookService {
 
         logger.info("Updating a Book!");
         Book obj = bookRepository.findById(book.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-        obj.setLaunch_date(book.getLaunch_date());
+        obj.setLaunchDate(book.getLaunchDate());
         obj.setTitle(book.getTitle());
         obj.setPrice(book.getPrice());
         obj.setAuthor(book.getAuthor());

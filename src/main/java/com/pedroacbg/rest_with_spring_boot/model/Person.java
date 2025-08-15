@@ -3,6 +3,7 @@ package com.pedroacbg.rest_with_spring_boot.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,10 +40,10 @@ public class Person implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "person_books", joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id")
+            name = "person_books", joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book>books;
+    private List<Book> books;
 
     public Person() {
     }
@@ -109,6 +110,14 @@ public class Person implements Serializable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override

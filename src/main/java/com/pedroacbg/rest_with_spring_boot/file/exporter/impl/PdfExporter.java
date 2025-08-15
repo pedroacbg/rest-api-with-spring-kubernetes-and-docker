@@ -55,12 +55,16 @@ public class PdfExporter implements FileExporter {
 
         InputStream qrCodeStream = qrCodeService.generateQRCode(person.getProfileUrl(), 200, 200);
 
-        JRBeanCollectionDataSource mainDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person));
-        JRBeanCollectionDataSource subDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person.getBooks()));
+        JRBeanCollectionDataSource subDataSource = new JRBeanCollectionDataSource(person.getBooks());
+
+//        String path = getClass().getResource("/templates/books.jasper").getPath();
+
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("SUB_REPORT_DATA_SOURCE", subDataSource);
         parameters.put("BOOK_SUB_REPORT", subReport);
         parameters.put("QR_CODEIMAGE", qrCodeStream);
+
+        JRBeanCollectionDataSource mainDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person));
         JasperPrint jasperPrint = JasperFillManager.fillReport(mainReport, parameters, mainDataSource);
 
         try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){

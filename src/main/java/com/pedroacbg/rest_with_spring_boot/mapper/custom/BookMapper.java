@@ -12,7 +12,7 @@ public class BookMapper {
         entity.setAuthor(obj.getAuthor());
         entity.setPrice(obj.getPrice());
         entity.setTitle(obj.getTitle());
-        entity.setLaunch_date(obj.getLaunch_date());
+        entity.setLaunchDate(obj.getLaunchDate());
         return entity;
     }
 
