@@ -13,7 +13,7 @@ public class BookDTO implements Serializable {
 
     private Long id;
     private String author;
-    private Date launch_date;
+    private Date launchDate;
     private Double price;
     private String title;
 
@@ -36,12 +36,12 @@ public class BookDTO implements Serializable {
         this.author = author;
     }
 
-    public Date getLaunch_date() {
-        return launch_date;
+    public Date getLaunchDate() {
+        return launchDate;
     }
 
-    public void setLaunch_date(Date launch_date) {
-        this.launch_date = launch_date;
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
     }
 
     public Double getPrice() {
@@ -63,12 +63,11 @@ public class BookDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof BookDTO bookDTO)) return false;
-        if (!super.equals(o)) return false;
-        return Objects.equals(getId(), bookDTO.getId()) && Objects.equals(getAuthor(), bookDTO.getAuthor()) && Objects.equals(getLaunch_date(), bookDTO.getLaunch_date()) && Objects.equals(getPrice(), bookDTO.getPrice()) && Objects.equals(getTitle(), bookDTO.getTitle());
+        return Objects.equals(getId(), bookDTO.getId()) && Objects.equals(getAuthor(), bookDTO.getAuthor()) && Objects.equals(getLaunchDate(), bookDTO.getLaunchDate()) && Objects.equals(getPrice(), bookDTO.getPrice()) && Objects.equals(getTitle(), bookDTO.getTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getAuthor(), getLaunch_date(), getPrice(), getTitle());
+        return Objects.hash(getId(), getAuthor(), getLaunchDate(), getPrice(), getTitle());
     }
 }

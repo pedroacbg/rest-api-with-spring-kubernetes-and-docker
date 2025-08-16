@@ -70,7 +70,7 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(20D, createdBook.getPrice());
-        assertEquals(new Date(1511968513636L), createdBook.getLaunch_date());
+        assertEquals(new Date(1511968513636L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -97,7 +97,7 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(21D, createdBook.getPrice());
-        assertEquals(new Date(1511968513636L), createdBook.getLaunch_date());
+        assertEquals(new Date(1511968513636L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -121,7 +121,7 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(21D, createdBook.getPrice());
-        assertEquals(new Date(1511920800000L), createdBook.getLaunch_date());
+        assertEquals(new Date(1511920800000L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -139,7 +139,7 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
                 .config(config.encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("application/yaml", ContentType.TEXT)))
                 .contentType("application/yaml")
                 .accept("application/yaml")
-                .queryParams("page", 0, "size", 12, "direction", "asc")
+                .queryParams("page", 9, "size", 12, "direction", "asc")
                 .when().get().then().statusCode(200)
                 .contentType("application/yaml")
                 .extract().body().asString();
@@ -152,30 +152,27 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
         assertNotNull(bookOne.getId());
         assertTrue(bookOne.getId() > 0);
 
-        assertEquals("Viktor Mayer-Schonberger e Kenneth Kukier", bookOne.getAuthor());
-        assertEquals("Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana", bookOne.getTitle());
-        assertEquals(54D, bookOne.getPrice());
-        assertEquals(new Date(1510020000000L), bookOne.getLaunch_date());
+        assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
+        assertEquals("The Art of Agile Development", bookOne.getTitle());
+        assertEquals(38.03, bookOne.getPrice());
 
         BookDTO bookFour = books.get(3);
 
         assertNotNull(bookFour.getId());
         assertTrue(bookFour.getId() > 0);
 
-        assertEquals("Ralph Johnson, Erich Gamma, John Vlissides e Richard Helm", bookFour.getAuthor());
-        assertEquals("Design Patterns", bookFour.getTitle());
-        assertEquals(45D, bookFour.getPrice());
-        assertEquals(new Date(1511920800000L), bookFour.getLaunch_date());
+        assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
+        assertEquals("The Art of Agile Development", bookOne.getTitle());
+        assertEquals(38.03, bookOne.getPrice());
 
         BookDTO bookSix = books.get(5);
 
         assertNotNull(bookSix.getId());
         assertTrue(bookSix.getId() > 0);
 
-        assertEquals("Roger S. Pressman", bookSix.getAuthor());
-        assertEquals("Engenharia de Software: uma abordagem profissional", bookSix.getTitle());
-        assertEquals(56D, bookSix.getPrice());
-        assertEquals(new Date(1510020000000L), bookSix.getLaunch_date());
+        assertEquals("Donald E. Knuth", bookSix.getAuthor());
+        assertEquals("The Art of Computer Programming, Volume 1: Fundamental Algorithms", bookSix.getTitle());
+        assertEquals(52.11, bookSix.getPrice());
 
     }
 
@@ -183,7 +180,7 @@ class BookControllerYAMLTest extends AbstractIntegrationTest {
         book.setAuthor("Reinaldo");
         book.setTitle("O livro que vai mudar sua vida ou não");
         book.setPrice(20D);
-        book.setLaunch_date(new Date(1511968513636L));
+        book.setLaunchDate(new Date(1511968513636L));
     }
 
 }

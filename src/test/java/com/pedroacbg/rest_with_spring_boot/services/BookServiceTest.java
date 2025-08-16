@@ -86,7 +86,7 @@ public class BookServiceTest {
         assertEquals("Author Test1", result.getAuthor());
         assertEquals((double) 1, result.getPrice());
         assertEquals("Title Test1", result.getTitle());
-        assertEquals(new Date(1511968513636L), result.getLaunch_date());
+        assertEquals(new Date(1511968513636L), result.getLaunchDate());
 
     }
 
@@ -134,7 +134,7 @@ public class BookServiceTest {
         assertEquals("Author Test1", result.getAuthor());
         assertEquals((double) 1, result.getPrice());
         assertEquals("Title Test1", result.getTitle());
-        assertEquals(new Date(1511968513636L), result.getLaunch_date());
+        assertEquals(new Date(1511968513636L), result.getLaunchDate());
 
     }
 
@@ -196,7 +196,7 @@ public class BookServiceTest {
         assertEquals("Author Test1", result.getAuthor());
         assertEquals((double) 1, result.getPrice());
         assertEquals("Title Test1", result.getTitle());
-        assertEquals(new Date(1511968513636L), result.getLaunch_date());
+        assertEquals(new Date(1511968513636L), result.getLaunchDate());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class BookServiceTest {
         assertEquals("Author Test1", bookOne.getAuthor());
         assertEquals((double) 1, bookOne.getPrice());
         assertEquals("Title Test1", bookOne.getTitle());
-        assertEquals(new Date(1511968513636L), bookOne.getLaunch_date());
+        assertEquals(new Date(1511968513636L), bookOne.getLaunchDate());
 
         var BookFour = books.get(4);
 
@@ -302,7 +302,7 @@ public class BookServiceTest {
         assertEquals("Author Test4", BookFour.getAuthor());
         assertEquals((double) 4, BookFour.getPrice());
         assertEquals("Title Test4", BookFour.getTitle());
-        assertEquals(new Date(1511968513636L), BookFour.getLaunch_date());
+        assertEquals(new Date(1511968513636L), BookFour.getLaunchDate());
 
         var BookSeven = books.get(7);
 
@@ -339,7 +339,7 @@ public class BookServiceTest {
         assertEquals("Author Test7", BookSeven.getAuthor());
         assertEquals((double) 7, BookSeven.getPrice());
         assertEquals("Title Test7", BookSeven.getTitle());
-        assertEquals(new Date(1511968513636L), BookSeven.getLaunch_date());
+        assertEquals(new Date(1511968513636L), BookSeven.getLaunchDate());
 
     }
 

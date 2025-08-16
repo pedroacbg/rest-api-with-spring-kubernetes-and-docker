@@ -59,14 +59,14 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
         assertNotNull(createdBook.getAuthor());
         assertNotNull(createdBook.getTitle());
         assertNotNull(createdBook.getPrice());
-        assertNotNull(createdBook.getLaunch_date());
+        assertNotNull(createdBook.getLaunchDate());
 
         assertTrue(createdBook.getId() > 0);
 
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(20D, createdBook.getPrice());
-        assertEquals(new Date(1511968513636L), createdBook.getLaunch_date());
+        assertEquals(new Date(1511968513636L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -111,14 +111,14 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
         assertNotNull(createdBook.getAuthor());
         assertNotNull(createdBook.getTitle());
         assertNotNull(createdBook.getPrice());
-        assertNotNull(createdBook.getLaunch_date());
+        assertNotNull(createdBook.getLaunchDate());
 
         assertTrue(createdBook.getId() > 0);
 
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(20D, createdBook.getPrice());
-        assertEquals(new Date(1511920800000L), createdBook.getLaunch_date());
+        assertEquals(new Date(1511920800000L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -156,7 +156,7 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
         book.setAuthor("Reinaldo");
         book.setTitle("O livro que vai mudar sua vida ou não");
         book.setPrice(20D);
-        book.setLaunch_date(new Date(1511968513636L));
+        book.setLaunchDate(new Date(1511968513636L));
     }
 
 }

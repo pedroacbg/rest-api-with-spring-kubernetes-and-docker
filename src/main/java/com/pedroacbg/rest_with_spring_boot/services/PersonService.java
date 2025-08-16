@@ -6,8 +6,7 @@ import com.pedroacbg.rest_with_spring_boot.exception.BadRequestException;
 import com.pedroacbg.rest_with_spring_boot.exception.FileStorageException;
 import com.pedroacbg.rest_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.pedroacbg.rest_with_spring_boot.exception.ResourceNotFoundException;
-import com.pedroacbg.rest_with_spring_boot.file.exporter.MediaTypes;
-import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.FileExporter;
+import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.PersonExporter;
 import com.pedroacbg.rest_with_spring_boot.file.exporter.factory.FileExporterFactory;
 import com.pedroacbg.rest_with_spring_boot.file.importer.contract.FileImporter;
 import com.pedroacbg.rest_with_spring_boot.file.importer.factory.FileImporterFactory;
@@ -88,7 +87,7 @@ public class PersonService {
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
             return exporter.exportPerson(person);
         } catch (Exception e) {
             throw new RuntimeException("Error during file export", e);
@@ -101,8 +100,8 @@ public class PersonService {
         var entity = personRepository.findAll(pageable)
                 .map(person -> parseObject(person, PersonDTO.class)).getContent();
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
-            return exporter.exportFile(entity);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
+            return exporter.exportPeople(entity);
         } catch (Exception e) {
             throw new RuntimeException("Error during file export", e);
         }

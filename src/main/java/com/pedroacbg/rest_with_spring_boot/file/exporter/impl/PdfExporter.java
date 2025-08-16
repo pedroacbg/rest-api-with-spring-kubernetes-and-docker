@@ -1,7 +1,7 @@
 package com.pedroacbg.rest_with_spring_boot.file.exporter.impl;
 
 import com.pedroacbg.rest_with_spring_boot.data.dto.v1.PersonDTO;
-import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.FileExporter;
+import com.pedroacbg.rest_with_spring_boot.file.exporter.contract.PersonExporter;
 import com.pedroacbg.rest_with_spring_boot.services.QRCodeService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -15,13 +15,13 @@ import java.io.InputStream;
 import java.util.*;
 
 @Component
-public class PdfExporter implements FileExporter {
+public class PdfExporter implements PersonExporter {
 
     @Autowired
     private QRCodeService qrCodeService;
 
     @Override
-    public Resource exportFile(List<PersonDTO> people) throws Exception {
+    public Resource exportPeople(List<PersonDTO> people) throws Exception {
         InputStream inputStream = getClass().getResourceAsStream("/templates/people.jrxml");
         if(inputStream == null){
             throw new RuntimeException("Template file not found: /templates/people.jrxml");
