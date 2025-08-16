@@ -2,12 +2,10 @@ package com.pedroacbg.rest_with_spring_boot.data.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pedroacbg.rest_with_spring_boot.model.Book;
-import jakarta.persistence.Column;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
