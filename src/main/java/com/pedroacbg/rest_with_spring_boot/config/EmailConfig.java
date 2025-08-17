@@ -9,12 +9,12 @@ import java.util.Objects;
 @ConfigurationProperties(prefix = "spring.mail")
 public class EmailConfig {
 
+    private String host;
+    private int port;
     private String username;
     private String password;
-    private String host;
-    private Integer port;
     private String from;
-    private Boolean ssl;
+    private boolean ssl;
 
     public EmailConfig() {
     }

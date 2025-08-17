@@ -12,6 +12,7 @@ public interface EmailControllerDocs {
     @Operation(summary = "Send an e-mail", description = "Sends an e-mail by providing details, subject and body",
             tags = {"Email"},
             responses = {
+                @ApiResponse(description = "Success", responseCode = "200", content = @Content),
                 @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                 @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                 @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
@@ -21,6 +22,7 @@ public interface EmailControllerDocs {
     @Operation(summary = "Send an e-mail with attachment", description = "Sends and e-mail with attachments by providing details, subject and body",
             tags = {"Email"},
             responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)

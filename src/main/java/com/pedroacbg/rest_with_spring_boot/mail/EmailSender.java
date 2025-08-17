@@ -5,7 +5,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,7 +19,6 @@ import java.util.StringTokenizer;
 @Component
 public class EmailSender implements Serializable {
 
-    public static final long serialVersionUID = 1L;
     Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
     public final JavaMailSender javaMailSender;
@@ -57,9 +55,8 @@ public class EmailSender implements Serializable {
 
     public void send(EmailConfig config){
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = null;
         try {
-            helper = new MimeMessageHelper(message, true); // o true é pora aceitar envio de arquivos
+            MimeMessageHelper helper = new MimeMessageHelper(message, true); // o true é pora aceitar envio de arquivos
             helper.setFrom(config.getUsername());
             helper.setTo(recipients.toArray(new InternetAddress[0]));
             helper.setSubject(subject);

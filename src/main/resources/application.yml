@@ -26,6 +26,7 @@ spring:
     username: ${EMAIL_USERNAME}
     password: ${EMAIL_PASSWORD}
     properties:
+      transport.protocol: smtp
       mail.smtp.auth: true
       mail.smtp.starttls.enabled: true
       mail.smtp.starttls.required: true
@@ -39,6 +40,8 @@ logging:
   level:
 #    root: WARN
     com.pedroacbg: DEBUG
+    org.springframework.mail: DEBUG
+    com.sun.mail: DEBUG
  #   net.sf.jasperreports.engine.*: TRACE
 spring-doc:
   paths-to-match: /api/**/v1/**
