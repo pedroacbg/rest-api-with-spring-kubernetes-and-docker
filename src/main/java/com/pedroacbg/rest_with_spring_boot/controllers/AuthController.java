@@ -19,7 +19,8 @@ public class AuthController implements AuthControllerDocs {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override
     public ResponseEntity<?> signIn(@RequestBody AccountCredentialsDTO credentials){
         if (credentialsIsInvalid(credentials)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
@@ -27,10 +28,11 @@ public class AuthController implements AuthControllerDocs {
         var token = authService.singIn(credentials);
         if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 
-        return ResponseEntity.ok().body(token);
+        return token;
     }
 
-    @PutMapping("/refresh/{username}")
+    @PutMapping(value = "/refresh/{username}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override
     public ResponseEntity<?> refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken){
         if (parametersAreInvalid(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
@@ -38,7 +40,7 @@ public class AuthController implements AuthControllerDocs {
         var token = authService.refreshToken(username, refreshToken);
         if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 
-        return ResponseEntity.ok().body(token);
+        return token;
     }
 
     @PostMapping(value = "/createUser", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
