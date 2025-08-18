@@ -43,10 +43,8 @@ spring:
       max-request-size: 215MB
 logging:
   level:
-#    root: WARN
+    root: TRACE
     com.pedroacbg: DEBUG
-    org.springframework.mail: DEBUG
-    com.sun.mail: DEBUG
  #   net.sf.jasperreports.engine.*: TRACE
 spring-doc:
   paths-to-match: /api/**/v1/**

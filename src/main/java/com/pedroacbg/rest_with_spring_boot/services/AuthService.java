@@ -24,7 +24,7 @@ public class AuthService {
     private UserRepository userRepository;
 
     public ResponseEntity<TokenDTO> singIn(AccountCredentialsDTO credentials){
-        
+
         // faz a autenticacao do usuario de acordo com as credenciais do usuario na requisição
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));

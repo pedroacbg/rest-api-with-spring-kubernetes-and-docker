@@ -88,11 +88,12 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization"); // retorna no header Bearer {token}
-        if(StringUtils.isEmpty(bearerToken) && bearerToken.startsWith("Bearer ")){
+
+        if(StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring("Bearer ".length()); // remove o "Bearer " e retorna apenas o token
-        }else{
-            throw new InvalidJWTAuthenticationException("Invalid JWT Token");
         }
+
+        return null;
     }
 
     // valida o token JWT de acordo com a data de expiração
