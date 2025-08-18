@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,12 @@ public class AuthController {
         if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 
         return ResponseEntity.ok().body(token);
+    }
+
+    @PostMapping(value = "/createUser", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    public AccountCredentialsDTO create(@RequestBody AccountCredentialsDTO credentials){
+        return authService.create(credentials);
     }
 
     private boolean parametersAreInvalid(String username, String refreshToken) {
