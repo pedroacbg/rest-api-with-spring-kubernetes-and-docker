@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pedroacbg.rest_with_spring_boot.config.TestsConfigs;
+import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.AccountCredentialsDTO;
 import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.BookDTO;
+import com.pedroacbg.rest_with_spring_boot.integrationtests.dto.TokenDTO;
 import com.pedroacbg.rest_with_spring_boot.integrationtests.testcontainers.AbstractIntegrationTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -27,12 +29,35 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
     private static RequestSpecification requestSpecification;
     private static ObjectMapper objectMapper;
     private static BookDTO book;
+    private static TokenDTO tokenDTO;
 
     @BeforeAll
     static void setUp() {
         objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         book = new BookDTO();
+        tokenDTO = new TokenDTO();
+    }
+
+    @Test
+    @Order(0)
+    void signIn() {
+        AccountCredentialsDTO credentials = new AccountCredentialsDTO("jeraldo", "admin123");
+
+        tokenDTO = given()
+                .basePath("/auth/signin")
+                .port(TestsConfigs.SERVER_PORT)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(credentials)
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body().as(TokenDTO.class);
+
+        assertNotNull(tokenDTO.getAccessToken());
+        assertNotNull(tokenDTO.getRefreshToken());
     }
 
     @Test
@@ -40,6 +65,7 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
     void create() throws JsonProcessingException {
         mockBook();
         requestSpecification = new RequestSpecBuilder().addHeader(TestsConfigs.HEADER_PARAM_ORIGIN, TestsConfigs.ORIGIN_GULERONE)
+                .addHeader(TestsConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDTO.getAccessToken())
                 .setBasePath("/api/books/v1")
                 .setPort(TestsConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
@@ -73,6 +99,7 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
     @Order(2)
     void createWithWrongOrigin() throws JsonProcessingException {
         requestSpecification = new RequestSpecBuilder().addHeader(TestsConfigs.HEADER_PARAM_ORIGIN, TestsConfigs.ORIGIN_GOOGLE)
+                .addHeader(TestsConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDTO.getAccessToken())
                 .setBasePath("/api/books/v1")
                 .setPort(TestsConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
@@ -92,6 +119,7 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
     @Order(3)
     void findByid() throws JsonProcessingException {
         requestSpecification = new RequestSpecBuilder().addHeader(TestsConfigs.HEADER_PARAM_ORIGIN, TestsConfigs.ORIGIN_LOCALHOST)
+                .addHeader(TestsConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDTO.getAccessToken())
                 .setBasePath("/api/books/v1")
                 .setPort(TestsConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
@@ -125,6 +153,7 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
     @Order(4)
     void findByidWithWrongOrigin() throws JsonProcessingException {
         requestSpecification = new RequestSpecBuilder().addHeader(TestsConfigs.HEADER_PARAM_ORIGIN, TestsConfigs.ORIGIN_GOOGLE)
+                .addHeader(TestsConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDTO.getAccessToken())
                 .setBasePath("/api/books/v1")
                 .setPort(TestsConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
