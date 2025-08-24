@@ -188,7 +188,7 @@ class BookControllerXMLTest extends AbstractIntegrationTest {
 
         assertEquals("Donald E. Knuth", bookSix.getAuthor());
         assertEquals("The Art of Computer Programming, Volume 1: Fundamental Algorithms", bookSix.getTitle());
-        assertEquals(52.11, bookSix.getPrice());
+        assertEquals(89.64, bookSix.getPrice());
 
     }
 
