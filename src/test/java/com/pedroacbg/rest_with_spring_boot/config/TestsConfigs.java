@@ -2,7 +2,7 @@ package com.pedroacbg.rest_with_spring_boot.config;
 
 public interface TestsConfigs {
 
-    int SERVER_PORT = 8888;
+    int SERVER_PORT = 80;
 
     String HEADER_PARAM_AUTHORIZATION = "Authorization";
     String HEADER_PARAM_ORIGIN = "Origin";

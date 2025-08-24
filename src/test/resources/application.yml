@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://gulerone-animes.netlify.app/
 file:
-  upload-dir: ../../../../../../../upload
+  upload-dir: /home/runner/work/rest-api-with-spring-kubernetes-and-docker/upload
 security:
   jwt:
     token:

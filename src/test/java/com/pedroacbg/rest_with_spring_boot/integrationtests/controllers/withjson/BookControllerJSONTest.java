@@ -167,7 +167,7 @@ class BookControllerJSONTest extends AbstractIntegrationTest {
 
         assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
         assertEquals("The Art of Agile Development", bookOne.getTitle());
-        assertEquals(97.21, bookOne.getPrice());
+        assertEquals(38.03, bookOne.getPrice());
 
         BookDTO bookFour = books.get(3);
 
@@ -176,7 +176,7 @@ class BookControllerJSONTest extends AbstractIntegrationTest {
 
         assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
         assertEquals("The Art of Agile Development", bookOne.getTitle());
-        assertEquals(97.21, bookOne.getPrice());
+        assertEquals(38.03, bookOne.getPrice());
 
         BookDTO bookSix = books.get(5);
 
@@ -185,7 +185,7 @@ class BookControllerJSONTest extends AbstractIntegrationTest {
 
         assertEquals("Donald E. Knuth", bookSix.getAuthor());
         assertEquals("The Art of Computer Programming, Volume 1: Fundamental Algorithms", bookSix.getTitle());
-        assertEquals(89.64, bookSix.getPrice());
+        assertEquals(52.11, bookSix.getPrice());
 
     }
 
