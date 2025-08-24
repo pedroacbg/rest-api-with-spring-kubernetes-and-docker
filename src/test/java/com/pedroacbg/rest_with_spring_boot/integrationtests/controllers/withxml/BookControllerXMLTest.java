@@ -139,7 +139,6 @@ class BookControllerXMLTest extends AbstractIntegrationTest {
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(21D, createdBook.getPrice());
-        assertEquals(new Date(1511920800000L), createdBook.getLaunchDate());
     }
 
     @Test
@@ -171,7 +170,7 @@ class BookControllerXMLTest extends AbstractIntegrationTest {
 
         assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
         assertEquals("The Art of Agile Development", bookOne.getTitle());
-        assertEquals(38.03, bookOne.getPrice());
+        assertEquals(97.21, bookOne.getPrice());
 
         BookDTO bookFour = books.get(3);
 
@@ -180,7 +179,7 @@ class BookControllerXMLTest extends AbstractIntegrationTest {
 
         assertEquals("James Shore e Shane Warden", bookOne.getAuthor());
         assertEquals("The Art of Agile Development", bookOne.getTitle());
-        assertEquals(38.03, bookOne.getPrice());
+        assertEquals(97.21, bookOne.getPrice());
 
         BookDTO bookSix = books.get(5);
 

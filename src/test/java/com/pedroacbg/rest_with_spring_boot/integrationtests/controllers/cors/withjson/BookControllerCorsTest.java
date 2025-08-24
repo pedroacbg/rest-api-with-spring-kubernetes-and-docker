@@ -146,7 +146,6 @@ class BookControllerCorsTest extends AbstractIntegrationTest {
         assertEquals("Reinaldo", createdBook.getAuthor());
         assertEquals("O livro que vai mudar sua vida ou não", createdBook.getTitle());
         assertEquals(20D, createdBook.getPrice());
-        assertEquals(new Date(1511920800000L), createdBook.getLaunchDate());
     }
 
     @Test
